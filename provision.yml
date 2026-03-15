@@ -1,0 +1,23 @@
+---
+- name: Load balancer provision
+  tags: common
+  hosts: control
+  become: true
+  gather_facts: false
+  roles:
+    - haproxy
+    - keepalived
+    - etcdctl
+
+- name: Kubernetes provision
+  tags: common
+  hosts: [control, worker]
+  become: true
+  gather_facts: false
+  roles:
+    - disable_swap
+    - modprobe
+    - sysctl
+    - docker_repo
+    - kubernetes
+...

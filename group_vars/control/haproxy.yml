@@ -1,0 +1,21 @@
+---
+haproxy_k8s_servers: '{{ groups["control"] }}'
+
+haproxy_config_append:
+  defaults:
+    -
+    - default-server inter 100 fall 3 rise 2 on-marked-down shutdown-sessions
+  listen stats:
+    - mode http
+    - bind *:7000
+    - stats enable
+    - stats uri /
+  listen kubernetes:
+    - bind *:{{ k8s_lb_port }} transparent
+    - option tcp-check
+    - balance roundrobin
+    - |
+      {% for server in haproxy_k8s_servers %}
+      server {{ server }} {{ hostvars[server].ip_address }}:6443 check
+      {% endfor %}
+...

@@ -1,0 +1,14 @@
+---
+etcdctl_install_dir: /usr/local/bin
+etcdctl_version: '3.6.8'
+etcdctl_repo: https://github.com/etcd-io/etcd/releases/download/v{{
+  etcdctl_version }}
+etcdctl_download_url: '{{ etcdctl_repo }}/etcd-v{{ etcdctl_version
+  }}-linux-amd64.tar.gz'
+
+etcdctl_api: 3
+etcdctl_ca: /etc/kubernetes/pki/etcd/ca.crt
+etcdctl_cert: /etc/kubernetes/pki/etcd/server.crt
+etcdctl_key: /etc/kubernetes/pki/etcd/server.key
+etcdctl_endpoints: https://127.0.0.1:2379
+...

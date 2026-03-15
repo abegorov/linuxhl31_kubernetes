@@ -1,0 +1,21 @@
+---
+kubernetes_debug: '{{ debug }}'
+
+kubernetes_mirror: https://mirror.yandex.ru/mirrors/pkgs.k8s.io
+kubernetes_version: '1.35'
+kubernetes_repo_url: '{{ kubernetes_mirror }}/core/stable/v{{
+  kubernetes_version }}/deb/'
+
+kubernetes_signing_key: '{{ kubernetes_mirror }}/core/stable/v{{
+  kubernetes_version }}/deb/Release.key'
+kubernetes_signing_key_path: /etc/apt/keyrings/kubernetes-apt-keyring.key
+kubernetes_signing_key_checksum: >-
+  sha256:7627818cf7bae52f9008c93e8b1f961f53dea11d40891778de216fb1b43be54d
+
+kubernetes_kubelet_args: ''
+kubernetes_init_host: '{{ ansible_play_hosts | first }}'
+kubernetes_init_args: ''
+kubernetes_join_args: ''
+
+kubernetes_kubectl_install: true
+...

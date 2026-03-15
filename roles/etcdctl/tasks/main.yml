@@ -1,0 +1,43 @@
+---
+- name: Check current etcdctl version
+  ansible.builtin.command:
+    cmd: '{{ etcdctl_install_dir }}/etcdctl version'
+  changed_when: false
+  failed_when: false
+  check_mode: false
+  register: _etcdctl_version
+  tags: [etcdctl]
+
+- name: Download and unarchive etcdctl release binary
+  ansible.builtin.unarchive:
+    src: '{{ etcdctl_download_url }}'
+    dest: '{{ etcdctl_install_dir }}'
+    remote_src: true
+    include:
+      - etcd-v{{ etcdctl_version }}-linux-amd64/etcdctl
+      - etcd-v{{ etcdctl_version }}-linux-amd64/etcdutl
+    extra_opts: --strip-components=1
+    owner: root
+    group: root
+    mode: '0755'
+  when: etcdctl_version not in _etcdctl_version.stdout_lines |
+    default([''], True) | first
+  tags: [etcdctl]
+
+- name: Update etcdctl variables for root
+  vars:
+    etcdctl_vars:
+      ETCDCTL_API: '{{ etcdctl_api }}'
+      ETCDCTL_CACERT: '{{ etcdctl_ca }}'
+      ETCDCTL_CERT: '{{ etcdctl_cert }}'
+      ETCDCTL_KEY: '{{ etcdctl_key }}'
+      ETCDCTL_ENDPOINTS: '{{ etcdctl_endpoints }}'
+  ansible.builtin.lineinfile:
+    path: /root/.bashrc
+    regexp: '^export {{ item.key | ansible.builtin.regex_escape }}='
+    line: export {{ item.key }}={{ item.value | ansible.builtin.quote }}
+  loop: '{{ etcdctl_vars | ansible.builtin.dict2items }}'
+  loop_control:
+    label: '{{ item.key }}'
+  tags: [etcdctl]
+...

@@ -1,0 +1,4 @@
+---
+kubernetes_kubelet_args: --node-ip {{ ip_address }}
+kubernetes_init_host: '{{ groups["control"] | first }}'
+...
