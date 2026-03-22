@@ -31,12 +31,15 @@ GROUPS = {
   },
   :worker => {
     :"#{PRJ}-worker-01" => {
+      :disks => { :'#{PRJ}-worker-01-disk01' => '40GB' },
       :networks => { :private_network => { :ip => '192.168.56.31' } },
     },
     :"#{PRJ}-worker-02" => {
+      :disks => { :'#{PRJ}-worker-02-disk01' => '40GB' },
       :networks => { :private_network => { :ip => '192.168.56.32' } },
     },
     :"#{PRJ}-worker-03" => {
+      :disks => { :'#{PRJ}-worker-03-disk01' => '40GB' },
       :networks => { :private_network => { :ip => '192.168.56.33' } },
     },
   }
