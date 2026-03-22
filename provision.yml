@@ -1,6 +1,5 @@
 ---
 - name: Load balancer provision
-  tags: common
   hosts: control
   become: true
   gather_facts: false
@@ -10,14 +9,27 @@
     - etcdctl
 
 - name: Kubernetes provision
-  tags: common
   hosts: [control, worker]
   become: true
   gather_facts: false
   roles:
     - disable_swap
-    - modprobe
-    - sysctl
     - docker_repo
     - kubernetes
+
+- name: Worker provison
+  hosts: [worker]
+  become: true
+  gather_facts: false
+  roles:
+    - disk_label
+    - mount
+    - longhorn
+
+- name: Kubernetes backup
+  hosts: control
+  become: true
+  gather_facts: false
+  roles:
+    - kubernetes_backup
 ...
