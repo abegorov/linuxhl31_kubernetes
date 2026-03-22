@@ -1,5 +1,6 @@
 ---
-haproxy_k8s_servers: '{{ groups["control"] }}'
+haproxy_k8s_control: '{{ groups["control"] }}'
+haproxy_k8s_workers: '{{ groups["worker"] }}'
 
 haproxy_config_append:
   defaults:
@@ -15,7 +16,23 @@ haproxy_config_append:
     - option tcp-check
     - balance roundrobin
     - |
-      {% for server in haproxy_k8s_servers %}
+      {% for server in haproxy_k8s_control %}
       server {{ server }} {{ hostvars[server].ip_address }}:6443 check
+      {% endfor %}
+  listen http:
+    - bind *:80 transparent
+    - option tcp-check
+    - balance roundrobin
+    - |
+      {% for server in haproxy_k8s_workers %}
+      server {{ server }} {{ hostvars[server].ip_address }}:30080 check
+      {% endfor %}
+  listen https:
+    - bind *:443 transparent
+    - option tcp-check
+    - balance roundrobin
+    - |
+      {% for server in haproxy_k8s_workers %}
+      server {{ server }} {{ hostvars[server].ip_address }}:30080 check
       {% endfor %}
 ...

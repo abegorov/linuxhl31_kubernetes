@@ -1,4 +1,21 @@
 ---
+- name: Load k8s required kernel modules
+  community.general.modprobe:
+    name: '{{ item }}'
+    persistent: present
+    state: present
+  loop: '{{ kubernetes_modprobe }}'
+
+- name: Update k8s sysctl values
+  ansible.posix.sysctl:
+    name: '{{ item.key }}'
+    value: '{{ item.value }}'
+    reload: true
+    sysctl_file: '{{ kubernetes_sysctl_file }}'
+  loop: '{{ kubernetes_sysctl_settings | ansible.builtin.dict2items }}'
+  loop_control:
+    label: '{{ item.key }}={{ item.value }}'
+
 - name: Check cri disabled
   ansible.builtin.lineinfile:
     name: /etc/containerd/config.toml
@@ -38,4 +55,7 @@
 
 - name: Import cluster tasks
   ansible.builtin.import_tasks: cluster.yml
+
+- name: Import apply tasks
+  ansible.builtin.import_tasks: apply.yml
 ...

@@ -1,7 +1,9 @@
 ---
 kubernetes_init_args: >-
   --control-plane-endpoint {{ k8s_lb_ip }}:{{ k8s_lb_port }}
-  --pod-network-cidr {{ k8s_pod_network_cidr }}
+  --pod-network-cidr {{ kubernetes_flannel_network }}
   --apiserver-advertise-address {{ ip_address }}
-kubernetes_join_args: --control-plane
+kubernetes_join_args: >-
+  --control-plane
+  --apiserver-advertise-address {{ ip_address }}
 ...

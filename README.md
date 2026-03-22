@@ -13,12 +13,17 @@
 
 ## Запуск
 
+### Общие требования
+
+1. Необходимо установить **Ansible**.
+2. Необходимо установить **kubernetes** модуль для **python** (python3-kubernetes).
+3. Для разворачивания манифеста **envoy proxy** также нужен **helm**.
+
 ### Запуск в Yandex Cloud
 
 1. Необходимо установить и настроить утилиту **yc** по инструкции [Начало работы с интерфейсом командной строки](https://yandex.cloud/ru/docs/cli/quickstart).
 2. Необходимо установить **Terraform** по инструкции [Начало работы с Terraform](https://yandex.cloud/ru/docs/tutorials/infrastructure-management/terraform-quickstart).
-3. Необходимо установить **Ansible**.
-4. Необходимо перейти в папку проекта и запустить скрипт [up.sh](up.sh).
+3. Необходимо перейти в папку проекта и запустить скрипт [up.sh](up.sh).
 
 ### Запуск в Vagrant (VirtualBox)
 
@@ -40,5 +45,8 @@ rm vagrant.box
 - **VirtualBox 7.2.6_SUSE r172322**
 - **Ansible 2.20.3**
 - **Python 3.13.12**
+- **Python client for kubernetes 35.0.0**
+- **kubectl v1.35.2**
+- **helm v3.20.1**
 - **Jinja2 3.1.6**
 - **Terraform 1.14.6**

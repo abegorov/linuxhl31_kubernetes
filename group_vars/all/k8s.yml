@@ -1,6 +1,4 @@
 ---
 k8s_lb_ip: '192.168.56.11'
 k8s_lb_port: 8443
-k8s_pod_network_cidr: '10.244.0.0/16'
-k8s_flannel_iface: eth1
 ...

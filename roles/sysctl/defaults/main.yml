@@ -1,4 +1,0 @@
----
-sysctl_values: {}
-sysctl_file: /etc/sysctl.d/99-ansible.conf
-...

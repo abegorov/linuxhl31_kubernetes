@@ -1,7 +1,8 @@
 ---
 - name: Bootstrap initial cluster
   ansible.builtin.command:
-    cmd: kubeadm --skip-phases=bootstrap-token {{ kubernetes_init_args }}
+    cmd: kubeadm init --skip-phases=show-join-command {{
+      kubernetes_init_args }}
     creates: /etc/kubernetes/manifests/kube-apiserver.yaml
   when: kubernetes_init_host == inventory_hostname
 
@@ -12,6 +13,9 @@
   run_once: true
   register: _kubernetes_admin_conf
   no_log: '{{ not kubernetes_debug }}'
+
+- name: Import kubectl tasks
+  ansible.builtin.import_tasks: kubectl.yml
 
 - name: Check kubelet configuration exists
   ansible.builtin.stat:
@@ -43,25 +47,4 @@
           {{ _kubernetes_certificate_key.stdout_lines | last }}
           {{ kubernetes_join_args }}'
         creates: /etc/kubernetes/kubelet.conf
-
-- name: Conifgure kubectl
-  when: kubernetes_kubectl_install
-  block:
-    - name: Create .kube directory
-      ansible.builtin.file:
-        path: /root/.kube
-        state: directory
-        owner: root
-        group: root
-        mode: '0700'
-
-    - name: Update kubectl configuration
-      ansible.builtin.copy:
-        content: '{{ _kubernetes_admin_conf.content |
-          ansible.builtin.b64decode }}'
-        dest: /root/.kube/config
-        owner: root
-        group: root
-        mode: '0600'
-      no_log: '{{ not kubernetes_debug }}'
 ...
