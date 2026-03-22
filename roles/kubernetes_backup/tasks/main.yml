@@ -1,0 +1,57 @@
+---
+- name: Install zstd package
+  ansible.builtin.apt:
+    name: zstd
+    update_cache: true
+    cache_valid_time: 3600
+    state: present
+  retries: 10
+  delay: 10
+  tags: [kubernetes_backup]
+
+- name: Create backup directory
+  ansible.builtin.file:
+    path: '{{ kubernetes_backup_dir }}'
+    state: directory
+    owner: root
+    group: root
+    mode: '0770'
+  tags: [kubernetes_backup]
+
+- name: Update backup script
+  ansible.builtin.template:
+    src: backup.sh
+    dest: /usr/local/sbin/kubernetes-backup.sh
+    owner: root
+    group: root
+    mode: '0755'
+  tags: [kubernetes_backup]
+
+- name: Update kubernetes backup service
+  ansible.builtin.template:
+    src: backup.service
+    dest: /etc/systemd/system/kubernetes-backup.service
+    owner: root
+    group: root
+    mode: '0755'
+  tags: [kubernetes_backup]
+
+- name: Update kubernetes backup timer
+  ansible.builtin.template:
+    src: backup.timer
+    dest: /etc/systemd/system/kubernetes-backup.timer
+    owner: root
+    group: root
+    mode: '0755'
+  notify: Restart kubernetes backup timer
+  tags: [kubernetes_backup]
+
+- name: Enable and start kubernetes backup
+  ansible.builtin.systemd_service:
+    name: kubernetes-backup.timer
+    daemon_reload: true
+    enabled: true
+    state: started
+  ignore_errors: '{{ ansible_check_mode }}'
+  tags: [kubernetes_backup]
+...

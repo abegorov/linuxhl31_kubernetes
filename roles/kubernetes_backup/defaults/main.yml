@@ -1,0 +1,4 @@
+---
+kubernetes_backup_schedule: '*-*-* *:0/10'
+kubernetes_backup_dir: /srv/backup
+...

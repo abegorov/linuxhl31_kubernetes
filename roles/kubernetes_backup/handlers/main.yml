@@ -1,0 +1,7 @@
+---
+- name: Restart kubernetes backup timer
+  ansible.builtin.systemd_service:
+    name: kubernetes-backup.timer
+    state: restarted
+  ignore_errors: '{{ ansible_check_mode }}'
+...

@@ -1,0 +1,8 @@
+[Unit]
+Description=Kubernetes Backup Timer
+
+[Timer]
+OnCalendar={{ kubernetes_backup_schedule }}
+
+[Install]
+WantedBy=timers.target
