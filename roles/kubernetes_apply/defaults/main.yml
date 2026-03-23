@@ -1,0 +1,5 @@
+---
+kubernetes_apply_manifests: []
+kubernetes_apply_field_manager: ansible
+kubernetes_apply_kubeconfig: secrets/kubeconfig
+...

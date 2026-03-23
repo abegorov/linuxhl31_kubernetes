@@ -1,0 +1,15 @@
+---
+- name: Apply kubernetes manifests
+  kubernetes.core.k8s:
+    src: '{{ item }}'
+    apply: true
+    server_side_apply:
+      field_manager: '{{ kubernetes_apply_field_manager }}'
+      force_conflicts: true
+    kubeconfig: '{{ kubernetes_apply_kubeconfig }}'
+    wait: true
+  become: false
+  delegate_to: localhost
+  run_once: true
+  loop: '{{ kubernetes_apply_manifests }}'
+...
