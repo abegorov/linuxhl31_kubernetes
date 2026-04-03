@@ -43,7 +43,7 @@ rm vagrant.box
 
 - **Vagrant 2.4.9**
 - **VirtualBox 7.2.6_SUSE r172322**
-- **Ansible 2.20.3**
+- **Ansible 2.20.4**
 - **Python 3.13.12**
 - **Python client for kubernetes 35.0.0**
 - **kubectl v1.35.2**
