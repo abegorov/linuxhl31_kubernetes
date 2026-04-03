@@ -1,7 +1,9 @@
 ---
 - name: Apply kubernetes manifests
   kubernetes.core.k8s:
-    src: '{{ item }}'
+    template:
+      path: '{{ item }}'
+      lstrip_blocks: true
     apply: true
     server_side_apply:
       field_manager: '{{ kubernetes_apply_field_manager }}'
@@ -12,4 +14,5 @@
   delegate_to: localhost
   run_once: true
   loop: '{{ kubernetes_apply_manifests }}'
+  tags: [kubernetes_apply]
 ...

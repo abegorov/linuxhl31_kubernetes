@@ -26,6 +26,13 @@
     - mount
     - longhorn
 
+- name: Apply kubernetes manifests
+  hosts: [control]
+  become: false
+  gather_facts: false
+  roles:
+    - kubernetes_apply
+
 - name: Kubernetes backup
   hosts: control
   become: true
