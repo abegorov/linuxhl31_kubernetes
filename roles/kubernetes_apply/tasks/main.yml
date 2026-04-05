@@ -10,6 +10,7 @@
       force_conflicts: true
     kubeconfig: '{{ kubernetes_apply_kubeconfig }}'
     wait: true
+    wait_timeout: '{{ kubernetes_apply_wait_timeout }}'
   become: false
   delegate_to: localhost
   run_once: true
