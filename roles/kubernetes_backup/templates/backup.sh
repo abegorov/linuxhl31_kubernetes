@@ -7,6 +7,7 @@ export ETCDCTL_KEY="/etc/kubernetes/pki/etcd/server.key"
 export ETCDCTL_ENDPOINTS="https://127.0.0.1:2379"
 export KUBECONFIG="/root/.kube/config"
 
+umask 0027
 BACKUP_DIR="{{ kubernetes_backup_dir }}/$(date -u +%Y%m%d_%H%M%SZ)"
 mkdir -p "${BACKUP_DIR}"
 etcdctl snapshot save "${BACKUP_DIR}/snapshot.db"
