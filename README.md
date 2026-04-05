@@ -296,7 +296,7 @@ public_ips = {
 
 Шлюз находится по адресу 158.160.251.69, на нём должен быть **wordpress**:
 
-[!wordpress](images/wordpress.png)
+![wordpress](images/wordpress.png)
 
 Проверим наличие резервных копий **etcd**:
 
@@ -444,4 +444,4 @@ Forwarding from 127.0.0.1:8080 -> 8000
 Forwarding from [::1]:8080 -> 8000
 ```
 
-[!longhorn volumes](images/volumes.png)
+![longhorn volumes](images/volumes.png)
