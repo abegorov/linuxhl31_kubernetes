@@ -436,7 +436,7 @@ drwxr-x--- root/root         0 2026-04-05 14:20 ./default/
 -rw-r----- root/root      2020 2026-04-05 14:20 ./default/persistentvolumeclaims.yaml
 ```
 
-Как видно файл `snapshot.db` присутствует в архиве. Резервное копирование томов **longhorn** можно выполнить через **Volumes -> Create Backup** или **Recurring Jobs -> Create Backup** на **longhorn dashboard**:
+Как видно файл `snapshot.db` присутствует в архиве. Резервное копирование томов **longhorn** можно выполнить через **Volumes -> Create Backup** или **Recurring Jobs -> Create Recurring Job** на **longhorn dashboard**:
 
 ```text
 ❯ kubectl --kubeconfig secrets/kubeconfig -n longhorn-system port-forward services/longhorn-frontend 8080:80
@@ -445,3 +445,5 @@ Forwarding from [::1]:8080 -> 8000
 ```
 
 ![longhorn volumes](images/volumes.png)
+
+![longhorn jobs](images/jobs.png)
