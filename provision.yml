@@ -11,11 +11,12 @@
     - haproxy
     - keepalived
 
-- name: Kubernetes provision
+- name: Common provision
   hosts: [control, worker]
   become: true
   gather_facts: false
   roles:
+    - wait_connection
     - disable_swap
     - docker_repo
     - kubernetes
