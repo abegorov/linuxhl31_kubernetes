@@ -39,8 +39,8 @@
 
 - name: Update kubelet extra args
   ansible.builtin.copy:
-    content: 'KUBELET_EXTRA_ARGS={{ kubernetes_kubelet_args |
-      ansible.builtin.quote }}'
+    content: |
+      KUBELET_EXTRA_ARGS={{ kubernetes_kubelet_args | ansible.builtin.quote }}
     dest: /etc/default/kubelet
     owner: root
     group: root
