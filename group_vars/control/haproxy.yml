@@ -33,6 +33,6 @@ haproxy_config_append:
     - balance roundrobin
     - |
       {% for server in haproxy_k8s_workers %}
-      server {{ server }} {{ hostvars[server].ip_address }}:30080 check
+      server {{ server }} {{ hostvars[server].ip_address }}:30443 check
       {% endfor %}
 ...

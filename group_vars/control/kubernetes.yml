@@ -8,8 +8,11 @@ kubernetes_join_args: >-
   --apiserver-advertise-address {{ ip_address }}
 
 kubernetes_apply_manifests:
+  - manifests/certmanager-selfsigned-issuer.yml
+  - manifests/certmanager-gateway.yml
   - manifests/eg-nodeport.yml
   - manifests/gateway.yml
+  - manifests/http-to-https-redirect.yml
   - manifests/wordpress-mariadb-secret.yml
   - manifests/wordpress-mariadb-service-headless.yml
   - manifests/wordpress-mariadb-service.yml
